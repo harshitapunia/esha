@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import type { FormEvent } from 'react'
 import {
   useAccount,
@@ -13,6 +13,7 @@ import { formatEther, parseEther } from 'viem'
 import './App.css'
 import { chainPassAddress, sepoliaChainId } from './lib/chainPass'
 import { chainPassAbi } from './lib/chainPassAbi'
+import { SplashScreen } from './components/SplashScreen'
 
 type EventData = {
   eventId: bigint
@@ -52,6 +53,7 @@ const IconAward = () => (<svg xmlns="http://www.w3.org/2000/svg" width="20" heig
 const IconShield = () => (<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>)
 
 function App() {
+  const [showSplash, setShowSplash] = useState(true)
   const { address, isConnected, chainId } = useAccount()
   const publicClient = usePublicClient({ chainId: sepoliaChainId })
   const { connectors, connect, isPending: isConnecting } = useConnect()
@@ -61,6 +63,11 @@ function App() {
   const { isLoading: isConfirming, isSuccess: isConfirmed } = useWaitForTransactionReceipt({
     hash: txHash,
   })
+
+  useEffect(() => {
+    const timer = setTimeout(() => setShowSplash(false), 3400)
+    return () => clearTimeout(timer)
+  }, [])
 
   // UI state for pages
   const [activeTab, setActiveTab] = useState<'events' | 'marketplace' | 'staking' | 'portfolio' | 'create_event'>('events')
@@ -289,6 +296,10 @@ function App() {
       functionName: 'requestReviewDropWinner',
       args: [BigInt(winnerEventId)],
     } as any) // TS ignore wagmi signature strict check
+  }
+
+  if (showSplash) {
+    return <SplashScreen />
   }
 
   return (

@@ -1,4 +1,10 @@
 {
   "extends": "@graphprotocol/graph-ts/types/tsconfig.base.json",
+  "compilerOptions": {
+    "lib": ["es2020", "dom"],
+    "noLib": false,
+    "skipLibCheck": true,
+    "ignoreDeprecations": "6.0"
+  },
   "include": ["src", "tests"]
 }
