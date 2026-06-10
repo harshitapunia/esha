@@ -213,7 +213,7 @@ ChainPass bridges:
 
 ## 🌐 Deployed Link
 
-🔗 [https://esha-seven.vercel.app/](https://esha-seven.vercel.app/)
-
+🔗 [[https://esha-seven.vercel.app/](https://esha-seven.vercel.app/)
+](https://esha-omega.vercel.app/)
 ---
 
